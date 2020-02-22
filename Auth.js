@@ -6,6 +6,7 @@ import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import ChallengeList from "./ChallengeList";
+import NewChallenge from "./NewChallenge";
 
 const Stack = createStackNavigator();
 
@@ -23,19 +24,20 @@ export default class Auth extends Component {
 				<Stack.Navigator>
 					<Stack.Screen
 						name="Login"
-						options={{apiService: this.apiService}}
 						component={Login}
 					/>
 					<Stack.Screen
 						name="Registration"
-						options={{apiService: this.apiService}}
 						component={Registration}
 					/>
-					{/*<Stack.Screen*/}
-					{/*	name="ChallengeList"*/}
-					{/*	options={{apiService: this.apiService}}*/}
-					{/*	component={ChallengeList}*/}
-					{/*/>*/}
+					<Stack.Screen
+						name="ChallengeList"
+						component={ChallengeList}
+					/>
+					<Stack.Screen
+						name="NewChallenge"
+						component={NewChallenge}
+					/>
 				</Stack.Navigator>
 			</NavigationContainer>
 		)

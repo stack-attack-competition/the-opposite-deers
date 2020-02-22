@@ -2,17 +2,18 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
-  Button,
+  Text,
+  TextInput,
+  Button
 } from 'react-native';
-import DatePicker from 'react-native-date-picker'
 
 import { Challenge } from './model/Challenge'
 
-export default class ChallengeList extends Component {
+export default class NewChallenge extends Component {
 
   constructor(props) {
     super(props);
-    this.navigation = props.navigation;
+    //this.navigation = props.navigation;
     this.state = {
       title: '',
       description: '',
@@ -20,7 +21,6 @@ export default class ChallengeList extends Component {
     }
   }
   
-
   render() {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -36,14 +36,10 @@ export default class ChallengeList extends Component {
 						placeholder="Description"
 						onChangeText={(description) => this.setState({description})}
 					/>
-          <DatePicker
-            date={this.state.endDate}
-            onDateChange={(endDate) => this.setState({endDate})}
-          />
 					<Button
 						title="Create"
 						onPress={() => {
-							this.navigation.navigate('Home')
+							this.navigation.navigate('ChallengeList')
 						}}
 					/>
 				</View>

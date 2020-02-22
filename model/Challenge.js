@@ -1,15 +1,16 @@
 export class Challenge {
 
-  constructor(title, description, date) {
+  constructor(title, description, date, ownerId) {
     this.title = title;
     this.description = description;
-    this.end_date = date;
+    this.endDate = date;
+    this.ownerId = ;
   }
 
   dateToString() {
-    let yyyy = this.end_date.getFullYear();
-    let mm = this.end_date.getMonth() + 1;
-    let dd = this.end_date.getDate();
+    let yyyy = this.endDate.getFullYear();
+    let mm = this.endDate.getMonth() + 1;
+    let dd = this.endDate.getDate();
     return String(
       (mm < 10 ? '0' + mm : mm)
       + '-'

@@ -42,32 +42,56 @@ export default class Login extends Component {
 
 	render() {
 		return (
-			<View>
-				<View>
-					<TextInput
-						style={{height: 40, width: 200}}
-						placeholder="Email"
-						textContentType={'emailAddress'}
-						onChangeText={(email) => this.setState({email: email})}
-						value={this.state.email}
-					/>
-					<TextInput
-						style={{height: 40, width: 200}}
-						placeholder="Password"
-						textContentType={'password'}
-						secureTextEntry={true}
-						onChangeText={(password) => this.setState({password: password})}
-						value={this.state.password}
-					/>
+			<View style={styles.container}>
+				<TextInput
+					style={styles.inputField}
+					placeholder="Email"
+					textContentType={'emailAddress'}
+					onChangeText={(email) => this.setState({email: email})}
+					value={this.state.email}
+				/>
+				<TextInput
+					style={styles.inputField}
+					placeholder="Password"
+					textContentType={'password'}
+					secureTextEntry={true}
+					onChangeText={(password) => this.setState({password: password})}
+					value={this.state.password}
+				/>
+				<View style={styles.containerButton}>
 					<Button
+						style={styles.button}
+						color="#5661B3"
 						title="Login"
 						onPress={() => {
 							this.login()
-						}}
-					/>
+						}}/>
 				</View>
 			</View>
 		)
 	}
 }
 
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		justifyContent: 'center',
+    alignItems: "center",
+    backgroundColor: "white"
+	},
+  containerButton: {
+    padding: 10,
+		height: 64,
+		width: "80%"
+  },
+  button: {
+		height: 100
+	},
+	inputField: {
+		height: 40,
+		width: 200,
+		margin: 12,
+		padding: 6,
+		backgroundColor: "#F4F6FF"
+	}
+});

@@ -16,8 +16,7 @@ export default class ChallengeList extends Component {
 
   constructor(props) {
     super(props);
-    this.isLoggedIn = undefined;
-
+    this.navigation = this.props.navigation;
     this.state = {
       loading: true,
       challenges: []
@@ -38,6 +37,7 @@ export default class ChallengeList extends Component {
         <this.ItemComponent itemData={item} />
       }
       keyExtractor={item => item.title}
+      ItemSeparatorComponent = {this.ItemSeparator}
     />;
 
     if(this.state.loading){
@@ -63,7 +63,7 @@ export default class ChallengeList extends Component {
               color="#5661B3"
               title="New Challenge"
               onPress={() => {
-                this.navigation.navigate('NewChallenge')
+                this.props.navigation.navigate('NewChallenge');
               }}/>
           </View>
         </View>
@@ -76,8 +76,19 @@ export default class ChallengeList extends Component {
       <View style={styles.listItem}>
         <Text style={styles.itemData}>{itemData.title}</Text>
         <Text style={styles.itemData}>{itemData.description}</Text>
-        <Text style={styles.itemData}>{itemData.dateToString}</Text>
+        <Text style={styles.itemData}>{itemData.endDate}</Text>
       </View>
+    );
+  }
+
+  ItemSeparator() {
+    return (
+      <View style={{
+         height: .5,
+         width:"100%",
+         backgroundColor:"rgba(0,0,0,0.5)",
+        }}
+      />
     );
   }
 
@@ -128,19 +139,18 @@ export default class ChallengeList extends Component {
 const styles = StyleSheet.create({
   container: {
    flex: 1,
-   paddingTop: 22
+   paddingTop: 22,
+   backgroundColor: "white"
   },
   containerButton: {
     alignItems: 'center',
     padding: 10,
     height: 64,
-    backgroundColor: "black"
   },
   button: {
     height: 100
   },
   listItem: {
-    backgroundColor: "red"
   },
   itemData: {
     padding: 10,
