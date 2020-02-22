@@ -6,6 +6,12 @@ export class Profile extends Component {
       return (
         <View style={{alignItems: 'center'}}>
           <Text>Hello {this.props.name}!</Text>
+              <TouchableHighlight onPress={this._onPressButton}>
+          <Image
+            style={styles.button}
+            source={require('./myButton.png')}
+          />
+        </TouchableHighlight>
         </View>
       );
   }

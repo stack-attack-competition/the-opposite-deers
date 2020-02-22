@@ -5,16 +5,11 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Registration from "./Registration";
 import Login from "./Login";
+import ChallengeList from "./ChallengeList";
 
 const Stack = createStackNavigator();
 
-export default class Home extends Component {
-
-	constructor(props) {
-		super(props);
-	}
-
-	render() {
+export function LoginNavigator() {
 		return (
 				<NavigationContainer>
 					<Stack.Navigator>
@@ -25,6 +20,10 @@ export default class Home extends Component {
 						<Stack.Screen
 							name="Login"
 							component={Login}
+						/>
+						<Stack.Screen
+							name="ChallengeList"
+							component={ChallengeList}
 						/>
 					</Stack.Navigator>
 				</NavigationContainer>

@@ -9,7 +9,8 @@ export default class Login extends Component {
 			email: '',
 			password: ''
 		};
-		this.navigation = props.navigation
+		this.navigation = props.navigation;
+		this.isAuthenticated = true;
 	}
 
 	render() {
@@ -34,7 +35,7 @@ export default class Login extends Component {
 					<Button
 						title="Login"
 						onPress={() => {
-							this.navigation.navigate('Home')
+							this.navigation.navigate('ChallengeList', {isAuthenticated: this.state.password ? true : false})
 						}}
 					/>
 				</View>

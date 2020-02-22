@@ -11,13 +11,17 @@ import {
 import { Challenge } from './model/Challenge'
 import ApiService from "./rest/ApiService";
 
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
+
 export default class ChallengeList extends Component {
 
   constructor(props) {
     super(props);
-    this.isLoggedIn = undefined;
+    this.navigation = props.navigation;
     this.apiService = new ApiService();
-
     this.state = {
       loading: true,
       challenges: []
@@ -29,11 +33,12 @@ export default class ChallengeList extends Component {
       loading: false,
       challenges: this.getChallengeData(),
     })
+    console.log(this.props.route.params.isAuthenticated);
   }  
 
   render() {
     const listComponent = <FlatList
-      data={this.state.dataSource}
+      data={this.state.challenges}
       renderItem={({item}) => 
         <this.ItemComponent itemData={item} />
       }
@@ -47,32 +52,28 @@ export default class ChallengeList extends Component {
         </View>
       )
     }
-    if (this.isLoggedIn) {
+    if (!this.props.route.params.isAuthenticated) {
       return(
         <View style={styles.container}>
-          <FlatList
-            data={this.state.challenges}
-            renderItem={({item}) => 
-              <this.ItemComponent itemData={item} />
-            }
-            keyExtractor={item => item.title}
-          />
           {listComponent}
         </View>
       );
-    }
-    return(
-      <View style={styles.container}>
-        {listComponent}
-        <View style={styles.containerButton}>
-          <Button 
-            style={styles.button}
-            color="#5661B3"
-            title="New Challenge"
-            onPress={this.onNewChallenge}/>
+    } else {
+      return(
+        <View style={styles.container}>
+          {listComponent}
+          <View style={styles.containerButton}>
+            <Button 
+              style={styles.button}
+              color="#5661B3"
+              title="New Challenge"
+              onPress={() => {
+                this.navigation.navigate('NewChallenge')
+              }}/>
+          </View>
         </View>
-      </View>
-    );
+      );
+    }
   }
 
   ItemComponent({ itemData }) {
@@ -80,14 +81,9 @@ export default class ChallengeList extends Component {
       <View style={styles.listItem}>
         <Text style={styles.itemData}>{itemData.title}</Text>
         <Text style={styles.itemData}>{itemData.description}</Text>
-        <Text style={styles.itemData}>{itemData.dateToString()}</Text>
+        <Text style={styles.itemData}>{itemData.dateToString}</Text>
       </View>
     );
-  }
-
-  onNewChallenge() {
-    // TODO
-    console.log("I'm a New Challenge View!")
   }
 
   getChallengeData() {
@@ -106,7 +102,7 @@ export default class ChallengeList extends Component {
         loading: false,
         challenges: challenges
       });
-      console.log(this.state.challenges);
+      //console.log(this.state.challenges);
       console.log('Refreshed data')
     })
     .catch((err) => {
