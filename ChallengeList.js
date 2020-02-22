@@ -2,29 +2,29 @@ import React, { Component } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
 
 import { Challenge } from './model/Challenge'
+import ApiService from "./rest/ApiService";
 
 export default class ChallengeList extends Component {
 
   constructor(props) {
     super(props);
     this.isLoggedIn = undefined;
+    this.apiService = new ApiService();
+
     this.state = {
       loading: true,
-      dataSource: []
+      challenges: []
     };
   }
 
   componentDidMount(){
-    //this.getChallengeData();
     this.setState({
       loading: false,
-      //dataSource: data.length != 0 ? data : this.generateMockData()
-      dataSource: this.generateMockData()
+      challenges: this.getChallengeData(),
     })
   }  
 
   render() {
-    //if (this.isLoggedIn) {
       if(this.state.loading){
         return( 
           <View style={styles.loader}> 
@@ -35,7 +35,7 @@ export default class ChallengeList extends Component {
       return(
         <View style={styles.container}>
           <FlatList
-            data={this.state.dataSource}
+            data={this.state.challenges}
             renderItem={({item}) => 
               <this.ItemComponent itemData={item} />
             }
@@ -57,14 +57,22 @@ export default class ChallengeList extends Component {
   }
 
   getChallengeData() {
-    fetch('https://stack-attack-bed.herokuapp.com/challenges')
+    this.apiService.getChallenges()
     .then((res) => res.json())
     .then((data) => {
+      let challenges;
+
+      if (data.length > 0) {
+        challenges = data;
+      } else {
+        challenges = this.generateMockData()
+      }
+
       this.setState({
         loading: false,
-        //dataSource: data.length != 0 ? data : this.generateMockData()
-        dataSource: this.generateMockData()
-      })
+        challenges: challenges
+      });
+      console.log(this.state.challenges);
       console.log('Refreshed data')
     })
     .catch((err) => {

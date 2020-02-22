@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from "react-native";
+import 'react-native-gesture-handler';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import Registration from "./Registration";
+import Login from "./Login";
+
+const Stack = createStackNavigator();
 
 export default class Home extends Component {
 
@@ -9,9 +16,18 @@ export default class Home extends Component {
 
 	render() {
 		return (
-			<View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-				<Text>Welcome</Text>
-			</View>
+				<NavigationContainer>
+					<Stack.Navigator>
+						<Stack.Screen
+							name="Registration"
+							component={Registration}
+						/>
+						<Stack.Screen
+							name="Login"
+							component={Login}
+						/>
+					</Stack.Navigator>
+				</NavigationContainer>
 		)
 	}
 }

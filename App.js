@@ -1,29 +1,29 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Login from './Login';
-import 'react-native-gesture-handler';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import Home from "./Home";
 import ChallengeList from "./ChallengeList";
+import ApiService from "./rest/ApiService";
 
-const Stack = createStackNavigator();
 
 export default class App extends Component {
+
+  constructor(prop) {
+    super(prop);
+    this.state = {
+      isAuthenticated: true,
+    }
+  }
+
   render() {
+    let targetComponent = <Login/>;
+
+    if (this.state.isAuthenticated) {
+      targetComponent = <ChallengeList/>
+    }
     return (
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-                name="Login"
-                component={Login}
-            />
-            <Stack.Screen
-                name="Home"
-                component={ChallengeList}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-    );
+        targetComponent
+  );
   }
 }
 
