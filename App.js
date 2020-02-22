@@ -7,24 +7,27 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import ChallengeList from "./ChallengeList";
 import Registration from "./Registration";
+import NewChallenge from "./NewChallenge";
 
 const Stack = createStackNavigator();
 
 export default class App extends Component {
-    state = {
-      isAuthenticated: false,
-      isRegistered: true
-    };
+
+	state = {
+		isAuthenticated: false,
+		isRegistered: true
+	};
 
 	constructor(prop) {
 		super(prop);
-
 	}
 
 	onLogin = (isAuthenticated) => {
+		console.log(isAuthenticated);
 	  this.setState((previousState) => ({
         isAuthenticated: isAuthenticated
       }));
+	  navigation.navigate('ChallengeList', {isAuthenticated: this.state.isAuthenticated})
     };
 
     changeRegistrationStatus = (isRegistered) => {
@@ -33,7 +36,7 @@ export default class App extends Component {
       }));
     };
 
-	render() {
+	render = () => {
 		let targetComponent;
 		if (this.state.isAuthenticated) {
 			targetComponent =
@@ -42,7 +45,10 @@ export default class App extends Component {
 						<Stack.Screen
 							name="ChallengeList"
 							component={ChallengeList}
-                            options={{isAuthenticated: this.state.isAuthenticated}}
+						/>
+						<Stack.Screen
+							name="NewChallenge"
+							component={NewChallenge}
 						/>
 					</Stack.Navigator>
 				</NavigationContainer>

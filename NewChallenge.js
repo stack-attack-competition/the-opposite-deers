@@ -46,6 +46,34 @@ export default class NewChallenge extends Component {
 			</View>
     );
   }
-
 }
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		paddingTop: 22,
+		backgroundColor: "#4EAD9A"
+	},
+	containerButton: {
+		alignItems: 'center',
+		padding: 10,
+		height: 64,
+	},
+	button: {
+		height: 100
+	},
+	listItem: {
+		margin: 8
+	},
+	listInnerItem: {
+		padding: 8,
+		backgroundColor: "#448E7F"
+	},
+	itemData: {
+		padding: 10,
+		fontSize: 16,
+		color: "white"
+	},
+});
+
 

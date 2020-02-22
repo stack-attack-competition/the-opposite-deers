@@ -106,6 +106,17 @@ export default class Registration extends Component {
 						}}
 					/>
 				</View>
+				<View
+					style={styles.containerButton}>
+					<Button
+						style={styles.button}
+						color="#5661B3"
+						title="Login"
+						onPress={() => {
+							this.props.changeRegistrationStatus(true);
+						}}
+					/>
+				</View>
 			</View>
 		);
 	}

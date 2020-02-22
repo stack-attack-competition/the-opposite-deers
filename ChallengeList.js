@@ -1,170 +1,161 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
-  ActivityIndicator,
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  Image
+	ActivityIndicator,
+	FlatList,
+	StyleSheet,
+	Text,
+	View,
+	Button,
+	Image
 } from 'react-native';
 
-import { Challenge } from './model/Challenge';
+import {Challenge} from './model/Challenge';
 
 export default class ChallengeList extends Component {
 
-  BASE_URL = 'https://stack-attack-bed.herokuapp.com';
+	BASE_URL = 'https://stack-attack-bed.herokuapp.com';
 
-  constructor(props) {
-    super(props);
-    this.navigation = this.props.navigation;
-    this.state = {
-      loading: true,
-      challenges: []
-    };
-  }
+	state = {
+		loading: true,
+		challenges: []
+	};
 
-  componentDidMount(){
-    this.setState({
-      loading: false,
-      challenges: this.getChallengeData(this.BASE_URL)
-    });
-  }  
+	constructor(props) {
+		super(props);
+		this.navigation = props.navigation;
+	}
 
-  render() {
-    const listComponent = <FlatList
-      data={this.state.challenges}
-      renderItem={({item}) => 
-        <this.ItemComponent itemData={item} />
-      }
-      keyExtractor={item => item.title}
-      //ItemSeparatorComponent = {this.ItemSeparator}
-    />;
+	componentDidMount() {
+		this.setState({
+			loading: false,
+			challenges: this.getChallengeData(this.BASE_URL)
+		});
+	}
 
-    if(this.state.loading){
-      return( 
-        <View style={styles.loader}> 
-          <ActivityIndicator size="large" color="#0000ff"/>
-        </View>
-      )
-    }
-    if (!this.props.route.isAuthenticated) {
-      console.log('!authenticated');
-      return(
-        <View style={styles.container}>
-          {listComponent}
-        </View>
-      );
-    } else {
-      return(
-        <View style={styles.container}>
-          {listComponent}
-          <View style={styles.containerButton}>
-            <Button
-              style={styles.button}
-              color="#5661B3"
-              title="New Challenge"
-              onPress={() => {
-                this.props.navigation.navigate('NewChallenge');
-              }}/>
-          </View>
-        </View>
-      );
-    }
-  }
+	render = () => {
+		const listComponent = <FlatList
+			data={this.state.challenges}
+			renderItem={({item}) =>
+				<this.ItemComponent itemData={item}/>
+			}
+			keyExtractor={item => item.title}
+			//ItemSeparatorComponent = {this.ItemSeparator}
+		/>;
 
-  ItemComponent({ itemData }) {
-    return (
-      <View style={styles.listItem}>
-        <View style={styles.listInnerItem}>
-          <Text style={styles.itemData}>{itemData.title}</Text>
-          <Text style={styles.itemData}>{itemData.description}</Text>
-          <Text style={styles.itemData}>{itemData.endDate}</Text>
-        </View>
-      </View>
-    );
-  }
+		if (this.state.loading) {
+			return (
+				<View style={styles.loader}>
+					<ActivityIndicator size="large" color="#0000ff"/>
+				</View>
+			)
+		}
+		return (
+			<View style={styles.container}>
+				{listComponent}
+				<View style={styles.containerButton}>
+					<Button
+						style={styles.button}
+						color="#5661B3"
+						title="New Challenge"
+						onPress={() => {
+							this.navigation.navigate('NewChallenge');
+						}}/>
+				</View>
+			</View>);
+	};
 
-  ItemSeparator() {
-    return (
-      <View style={{
-         height: .5,
-         width:"100%",
-         backgroundColor:"rgba(0,0,0,0.5)",
-        }}
-      />
-    );
-  }
+	ItemComponent({itemData}) {
+		return (
+			<View style={styles.listItem}>
+				<View style={styles.listInnerItem}>
+					<Text style={styles.itemData}>{itemData.title}</Text>
+					<Text style={styles.itemData}>{itemData.description}</Text>
+					<Text style={styles.itemData}>{itemData.endDate}</Text>
+				</View>
+			</View>
+		);
+	}
 
-  getChallengeData(url) {
-    fetch(`${this.BASE_URL}/challenges`)
-    .then((res) => res.json())
-    .then((data) => {
-      let challenges;
-  
-      if (data.length > 0) {
-        challenges = data;
-      } else {
-        challenges = this.generateMockChallengeData()
-      }
-      console.log('Challenges downloaded');
-      //console.log(challenges);
-      this.setState({
-        loading: false,
-        challenges: challenges
-      });
-      //return challenges;
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-  }
+	ItemSeparator() {
+		return (
+			<View style={{
+				height: .5,
+				width: "100%",
+				backgroundColor: "rgba(0,0,0,0.5)",
+			}}
+			/>
+		);
+	}
 
-  generateMockChallengeData() {
-    return [
-      new Challenge(
-        'Challenge-1',
-        'First challenge lol',
-        new Date(2020, 3, 24) 
-      ),
-      new Challenge(
-        'Challenge-2',
-        'Another',
-        new Date(2020, 10, 4) 
-      ),
-      new Challenge(
-        'Challenge-3',
-        'Last one',
-        new Date(2020, 9, 2) 
-      )
-    ]
-  }
+	getChallengeData(url) {
+		fetch(`${this.BASE_URL}/challenges`)
+			.then((res) => res.json())
+			.then((data) => {
+				let challenges;
+
+				if (data.length > 0) {
+					challenges = data;
+				} else {
+					challenges = this.generateMockChallengeData()
+				}
+				console.log('Challenges downloaded');
+				//console.log(challenges);
+				this.setState({
+					loading: false,
+					challenges: challenges
+				});
+				//return challenges;
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+	}
+
+	generateMockChallengeData() {
+		return [
+			new Challenge(
+				'Challenge-1',
+				'First challenge lol',
+				new Date(2020, 3, 24)
+			),
+			new Challenge(
+				'Challenge-2',
+				'Another',
+				new Date(2020, 10, 4)
+			),
+			new Challenge(
+				'Challenge-3',
+				'Last one',
+				new Date(2020, 9, 2)
+			)
+		]
+	}
 }
 
 const styles = StyleSheet.create({
-  container: {
-   flex: 1,
-   paddingTop: 22,
-   backgroundColor: "#4EAD9A"
-  },
-  containerButton: {
-    alignItems: 'center',
-    padding: 10,
-    height: 64,
-  },
-  button: {
-    height: 100
-  },
-  listItem: {   
-    margin: 8 
-  },
-  listInnerItem: {
-    padding: 8,
-    backgroundColor: "#448E7F"
-  },
-  itemData: {
-    padding: 10,
-    fontSize: 16,
-    color: "white"
-  },
+	container: {
+		flex: 1,
+		paddingTop: 22,
+		backgroundColor: "#4EAD9A"
+	},
+	containerButton: {
+		alignItems: 'center',
+		padding: 10,
+		height: 64,
+	},
+	button: {
+		height: 100
+	},
+	listItem: {
+		margin: 8
+	},
+	listInnerItem: {
+		padding: 8,
+		backgroundColor: "#448E7F"
+	},
+	itemData: {
+		padding: 10,
+		fontSize: 16,
+		color: "white"
+	},
 });

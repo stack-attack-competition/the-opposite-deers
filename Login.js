@@ -14,7 +14,7 @@ export default class Login extends Component {
 		this.navigation = props.navigation;
 	}
 
-	login() {
+	login = () => {
 		const authData = {
 			email: this.state.email,
 			password: this.state.password
@@ -41,7 +41,7 @@ export default class Login extends Component {
 		.catch(error => {
 			console.error(error);
 		})
-	}
+	};
 
 	render() {
 		return (
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
     alignItems: "center",
-    backgroundColor: "#4EAD9A"
+    backgroundColor: "#3c7d71"
 	},
   containerButton: {
     padding: 10,
@@ -105,6 +105,6 @@ const styles = StyleSheet.create({
 		width: '80%',
 		margin: 12,
 		padding: 6,
-		backgroundColor: "#448E7F"
+		backgroundColor: "#376e64"
 	}
 });
