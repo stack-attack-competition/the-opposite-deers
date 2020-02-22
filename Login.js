@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, TextInput, Button} from "react-native";
+import {StyleSheet, Text, View, TextInput, Button} from "react-native";
 
 export default class Login extends Component {
 
@@ -23,7 +23,7 @@ export default class Login extends Component {
 		fetch(`${this.BASE_URL}/auth/login`, {
 			method: 'POST',
 			headers: {
-				// Accept: 'application/json',
+				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(authData),
@@ -33,7 +33,7 @@ export default class Login extends Component {
 		})
 		.then((user) => {
 			console.log(user);
-			this.navigation.navigate('ChallengeList', {isAuthenticated: true})
+			this.props.onLogin(true);
 		})
 		.catch(error => {
 			console.log(error);
@@ -66,6 +66,14 @@ export default class Login extends Component {
 						onPress={() => {
 							this.login()
 						}}/>
+					<Button
+						style={styles.button}
+						color="#5661B3"
+						title="Register"
+						onPress={() => {
+							this.props.onGoToRegistration(false);
+						}}
+					/>
 				</View>
 			</View>
 		)

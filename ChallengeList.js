@@ -47,7 +47,7 @@ export default class ChallengeList extends Component {
         </View>
       )
     }
-    if (!this.props.route.params.isAuthenticated) {
+    if (!this.props.isAuthenticated) {
       return(
         <View style={styles.container}>
           {listComponent}
