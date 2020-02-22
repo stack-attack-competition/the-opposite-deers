@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  Button,
+} from 'react-native';
 
 import { Challenge } from './model/Challenge'
 import ApiService from "./rest/ApiService";
@@ -25,13 +32,22 @@ export default class ChallengeList extends Component {
   }  
 
   render() {
-      if(this.state.loading){
-        return( 
-          <View style={styles.loader}> 
-            <ActivityIndicator size="large" color="#0c9"/>
-          </View>
-        )
+    const listComponent = <FlatList
+      data={this.state.dataSource}
+      renderItem={({item}) => 
+        <this.ItemComponent itemData={item} />
       }
+      keyExtractor={item => item.title}
+    />;
+
+    if(this.state.loading){
+      return( 
+        <View style={styles.loader}> 
+          <ActivityIndicator size="large" color="#0000ff"/>
+        </View>
+      )
+    }
+    if (this.isLoggedIn) {
       return(
         <View style={styles.container}>
           <FlatList
@@ -41,9 +57,22 @@ export default class ChallengeList extends Component {
             }
             keyExtractor={item => item.title}
           />
+          {listComponent}
         </View>
       );
-    //}
+    }
+    return(
+      <View style={styles.container}>
+        {listComponent}
+        <View style={styles.containerButton}>
+          <Button 
+            style={styles.button}
+            color="#5661B3"
+            title="New Challenge"
+            onPress={this.onNewChallenge}/>
+        </View>
+      </View>
+    );
   }
 
   ItemComponent({ itemData }) {
@@ -54,6 +83,11 @@ export default class ChallengeList extends Component {
         <Text style={styles.itemData}>{itemData.dateToString()}</Text>
       </View>
     );
+  }
+
+  onNewChallenge() {
+    // TODO
+    console.log("I'm a New Challenge View!")
   }
 
   getChallengeData() {
@@ -92,6 +126,11 @@ export default class ChallengeList extends Component {
         'Another',
         new Date(2020, 10, 4) 
       ),
+      new Challenge(
+        'Challenge-3',
+        'Last one',
+        new Date(2020, 9, 2) 
+      )
     ]
   }
 }
@@ -100,6 +139,15 @@ const styles = StyleSheet.create({
   container: {
    flex: 1,
    paddingTop: 22
+  },
+  containerButton: {
+    alignItems: 'center',
+    padding: 10,
+    height: 64,
+    backgroundColor: "black"
+  },
+  button: {
+    height: 100
   },
   listItem: {
     backgroundColor: "red"
