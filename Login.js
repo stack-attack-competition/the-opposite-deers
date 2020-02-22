@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
 	},
 	inputField: {
 		height: 40,
-		width: 200,
+		width: '80%',
 		margin: 12,
 		padding: 6,
 		backgroundColor: "#448E7F"
