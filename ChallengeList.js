@@ -6,9 +6,11 @@ import {
   Text,
   View,
   Button,
+  Image
 } from 'react-native';
 
-import { Challenge } from './model/Challenge'
+import { getChallengeData } from './DBQuery';
+import { Challenge } from './model/Challenge';
 
 export default class ChallengeList extends Component {
 
@@ -26,8 +28,8 @@ export default class ChallengeList extends Component {
   componentDidMount(){
     this.setState({
       loading: false,
-      challenges: this.getChallengeData(),
-    })
+      challenges: this.getChallengeData(this.BASE_URL)
+    });
   }  
 
   render() {
@@ -47,7 +49,7 @@ export default class ChallengeList extends Component {
         </View>
       )
     }
-    if (!this.props.isAuthenticated) {
+    if (!this.props.route.isAuthenticated) {
       console.log('!authenticated');
       return(
         <View style={styles.container}>
@@ -93,30 +95,31 @@ export default class ChallengeList extends Component {
     );
   }
 
-  getChallengeData() {
+  getChallengeData(url) {
     fetch(`${this.BASE_URL}/challenges`)
     .then((res) => res.json())
     .then((data) => {
       let challenges;
-
+  
       if (data.length > 0) {
         challenges = data;
       } else {
-        challenges = this.generateMockData()
+        challenges = this.generateMockChallengeData()
       }
-
+      console.log('Challenges downloaded');
+      //console.log(challenges);
       this.setState({
         loading: false,
         challenges: challenges
       });
-      console.log('Refreshed data')
+      //return challenges;
     })
     .catch((err) => {
       console.error(err);
     });
   }
 
-  generateMockData() {
+  generateMockChallengeData() {
     return [
       new Challenge(
         'Challenge-1',
