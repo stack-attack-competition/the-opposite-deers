@@ -27,7 +27,6 @@ export default class App extends Component {
 	  this.setState((previousState) => ({
         isAuthenticated: isAuthenticated
       }));
-	  navigation.navigate('ChallengeList', {isAuthenticated: this.state.isAuthenticated})
     };
 
     changeRegistrationStatus = (isRegistered) => {
