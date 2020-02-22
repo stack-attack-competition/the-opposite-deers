@@ -9,19 +9,15 @@ import {
 } from 'react-native';
 
 import { Challenge } from './model/Challenge'
-import ApiService from "./rest/ApiService";
-
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-
-const Stack = createStackNavigator();
 
 export default class ChallengeList extends Component {
 
+  BASE_URL = 'https://stack-attack-bed.herokuapp.com';
+
   constructor(props) {
     super(props);
-    this.navigation = props.navigation;
-    this.apiService = new ApiService();
+    this.isLoggedIn = undefined;
+
     this.state = {
       loading: true,
       challenges: []
@@ -33,7 +29,6 @@ export default class ChallengeList extends Component {
       loading: false,
       challenges: this.getChallengeData(),
     })
-    console.log(this.props.route.params.isAuthenticated);
   }  
 
   render() {
@@ -63,7 +58,7 @@ export default class ChallengeList extends Component {
         <View style={styles.container}>
           {listComponent}
           <View style={styles.containerButton}>
-            <Button 
+            <Button
               style={styles.button}
               color="#5661B3"
               title="New Challenge"
@@ -87,7 +82,7 @@ export default class ChallengeList extends Component {
   }
 
   getChallengeData() {
-    this.apiService.getChallenges()
+    fetch(`${this.BASE_URL}/challenges`)
     .then((res) => res.json())
     .then((data) => {
       let challenges;
@@ -102,7 +97,6 @@ export default class ChallengeList extends Component {
         loading: false,
         challenges: challenges
       });
-      //console.log(this.state.challenges);
       console.log('Refreshed data')
     })
     .catch((err) => {
@@ -152,4 +146,4 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 18
   },
-})
+});

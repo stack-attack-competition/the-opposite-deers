@@ -1,14 +1,7 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-
-import Login from './Login';
+import { StyleSheet} from 'react-native';
 import ChallengeList from "./ChallengeList";
-
-import ApiService from "./rest/ApiService";
-
-const Stack = createStackNavigator();
+import Auth from "./Auth";
 
 export default class App extends Component {
 
@@ -16,21 +9,18 @@ export default class App extends Component {
     super(prop);
     this.state = {
       isAuthenticated: false,
-    }
+    };
   }
 
   render() {
+    let targetComponent = <Auth/>;
+
+    if (this.state.isAuthenticated) {
+      targetComponent = <ChallengeList/>
+    }
     return (
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen 
-            name="ChallengeList"
-            component={ChallengeList}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    );
+        targetComponent
+  );
   }
 }
 

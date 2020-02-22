@@ -14,7 +14,7 @@ export function LoginNavigator() {
 				<NavigationContainer>
 					<Stack.Navigator>
 						<Stack.Screen
-							name="Registration"
+							name="ChallengeList"
 							component={Registration}
 						/>
 						<Stack.Screen
