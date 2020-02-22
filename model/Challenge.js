@@ -5,6 +5,7 @@ export class Challenge {
     this.description = description;
     this.endDate = date;
     this.ownerId = ownerId;
+    this.avatar = avatar;
   }
 
   dateToString() {

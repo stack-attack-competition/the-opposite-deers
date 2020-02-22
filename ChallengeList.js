@@ -9,7 +9,6 @@ import {
   Image
 } from 'react-native';
 
-import { getChallengeData } from './DBQuery';
 import { Challenge } from './model/Challenge';
 
 export default class ChallengeList extends Component {
@@ -39,7 +38,7 @@ export default class ChallengeList extends Component {
         <this.ItemComponent itemData={item} />
       }
       keyExtractor={item => item.title}
-      ItemSeparatorComponent = {this.ItemSeparator}
+      //ItemSeparatorComponent = {this.ItemSeparator}
     />;
 
     if(this.state.loading){
@@ -77,9 +76,11 @@ export default class ChallengeList extends Component {
   ItemComponent({ itemData }) {
     return (
       <View style={styles.listItem}>
-        <Text style={styles.itemData}>{itemData.title}</Text>
-        <Text style={styles.itemData}>{itemData.description}</Text>
-        <Text style={styles.itemData}>{itemData.endDate}</Text>
+        <View style={styles.listInnerItem}>
+          <Text style={styles.itemData}>{itemData.title}</Text>
+          <Text style={styles.itemData}>{itemData.description}</Text>
+          <Text style={styles.itemData}>{itemData.endDate}</Text>
+        </View>
       </View>
     );
   }
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
   container: {
    flex: 1,
    paddingTop: 22,
-   backgroundColor: "white"
+   backgroundColor: "#4EAD9A"
   },
   containerButton: {
     alignItems: 'center',
@@ -154,10 +155,16 @@ const styles = StyleSheet.create({
   button: {
     height: 100
   },
-  listItem: {
+  listItem: {   
+    margin: 8 
+  },
+  listInnerItem: {
+    padding: 8,
+    backgroundColor: "#448E7F"
   },
   itemData: {
     padding: 10,
-    fontSize: 18
+    fontSize: 16,
+    color: "white"
   },
 });
