@@ -31,12 +31,15 @@ export default class Login extends Component {
 		.then(data => {
 			return data.json();
 		})
-		.then((user) => {
-			console.log(user);
-			this.props.onLogin(true);
+		.then((responseObject) => {
+			//if (responseObject['error'] === undefined) {
+				this.props.onLogin(true);
+			//} else {
+				//console.error(responseObject);
+			//}
 		})
 		.catch(error => {
-			console.log(error);
+			console.error(error);
 		})
 	}
 
@@ -66,6 +69,8 @@ export default class Login extends Component {
 						onPress={() => {
 							this.login()
 						}}/>
+				</View>
+				<View style={styles.containerButton}>
 					<Button
 						style={styles.button}
 						color="#5661B3"
@@ -85,7 +90,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
     alignItems: "center",
-    backgroundColor: "white"
+    backgroundColor: "#4EAD9A"
 	},
   containerButton: {
     padding: 10,
@@ -100,6 +105,6 @@ const styles = StyleSheet.create({
 		width: 200,
 		margin: 12,
 		padding: 6,
-		backgroundColor: "#F4F6FF"
+		backgroundColor: "#448E7F"
 	}
 });
