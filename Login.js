@@ -76,7 +76,7 @@ export default class Login extends Component {
 						color="#5661B3"
 						title="Register"
 						onPress={() => {
-							this.props.onGoToRegistration(false);
+							this.props.changeRegistrationStatus(false);
 						}}
 					/>
 				</View>

@@ -6,7 +6,6 @@ import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import ChallengeList from "./ChallengeList";
-import {isRearCameraAvailable} from "expo/build/AR";
 import Registration from "./Registration";
 
 const Stack = createStackNavigator();
@@ -28,7 +27,7 @@ export default class App extends Component {
       }));
     };
 
-    goToRegistration = (isRegistered) => {
+    changeRegistrationStatus = (isRegistered) => {
       this.setState((previousState) => ({
         isRegistered: isRegistered
       }));
@@ -50,9 +49,9 @@ export default class App extends Component {
 
 		} else {
 		   if (this.state.isRegistered) {
-             targetComponent = <Login onLogin={this.onLogin} onGoToRegistration={this.goToRegistration}/>
+             targetComponent = <Login onLogin={this.onLogin} changeRegistrationStatus={this.changeRegistrationStatus}/>
            } else {
-             targetComponent = <Registration/>
+             targetComponent = <Registration onRegister={this.onRegister} changeRegistrationStatus={this.changeRegistrationStatus}/>
            }
         }
 		return (targetComponent)
