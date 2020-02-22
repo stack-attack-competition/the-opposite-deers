@@ -4,7 +4,7 @@ import Login from './Login';
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import Home from "./Home";
+import ChallengeList from "./ChallengeList";
 
 const Stack = createStackNavigator();
 
@@ -19,7 +19,7 @@ export default class App extends Component {
             />
             <Stack.Screen
                 name="Home"
-                component={Home}
+                component={ChallengeList}
             />
           </Stack.Navigator>
         </NavigationContainer>
